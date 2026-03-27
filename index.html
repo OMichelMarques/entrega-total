@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Método Entrega Total</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #080808;
+  --surface: #111;
+  --border: #1e1e1e;
+  --text: #edeae4;
+  --dim: #6a6560;
+  --muted: #2e2c2a;
+  --accent: #b02020;
+  --accent-soft: #c8976a;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+.wrap {
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 0 22px;
+}
+
+/* ====== HERO ====== */
+.hero {
+  padding: 72px 0 64px;
+}
+
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 40px;
+  font-weight: 400;
+}
+
+.hero-line {
+  font-size: clamp(32px, 7vw, 52px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+.hero-line span {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--accent-soft);
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--dim);
+  line-height: 1.6;
+  margin-top: 24px;
+  max-width: 480px;
+}
+
+/* ====== BLOCK ====== */
+.block {
+  padding: 52px 0;
+  border-top: 1px solid var(--border);
+}
+
+/* ====== PUNCHY TEXT ====== */
+.p {
+  margin-bottom: 20px;
+  font-size: 17px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.p:last-child { margin-bottom: 0; }
+
+.p-big {
+  font-size: clamp(22px, 4vw, 30px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.p-dim {
+  color: var(--dim);
+  font-size: 16px;
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+
+.p-em {
+  font-style: italic;
+  color: var(--accent-soft);
+}
+
+/* ====== HIGHLIGHT BLOCK ====== */
+.highlight {
+  border-left: 2px solid var(--accent);
+  padding: 4px 0 4px 20px;
+  margin: 32px 0;
+}
+
+.highlight .p-big {
+  font-size: clamp(20px, 3.5vw, 26px);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text);
+}
+
+/* ====== STEPS ====== */
+.step {
+  padding: 28px 0;
+  border-top: 1px solid var(--border);
+}
+
+.step:last-child { border-bottom: 1px solid var(--border); }
+
+.step-num {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.step-title {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.step-desc {
+  font-size: 15px;
+  color: var(--dim);
+  line-height: 1.65;
+}
+
+/* ====== CTA BUTTON ====== */
+.cta-wrap {
+  padding: 48px 0;
+  border-top: 1px solid var(--border);
+}
+
+.cta-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 16px;
+}
+
+.price-display {
+  font-size: clamp(40px, 8vw, 60px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  margin-bottom: 28px;
+  line-height: 1;
+}
+
+.price-display sup {
+  font-size: 0.45em;
+  font-weight: 400;
+  vertical-align: top;
+  margin-top: 10px;
+  color: var(--dim);
+}
+
+.btn {
+  display: block;
+  background: #d4351c;
+  color: #fff;
+  text-align: center;
+  padding: 20px 24px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(212, 53, 28, 0.35);
+}
+
+.btn:hover {
+  background: #bf2e18;
+  transform: translateY(-1px);
+}
+
+.cta-note {
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* ====== INLINE CTA (compact) ====== */
+.inline-cta {
+  padding: 40px 0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.inline-cta .p-dim {
+  margin-bottom: 20px;
+}
+
+/* ====== TESTIMONIALS CAROUSEL ====== */
+.testi-section {
+  padding: 52px 0 0;
+  border-top: 1px solid var(--border);
+}
+
+.testi-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 8px;
+  padding: 0 22px;
+  max-width: 580px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.testi-hint {
+  font-size: 12px;
+  color: var(--muted);
+  padding: 0 22px;
+  margin-bottom: 28px;
+  max-width: 580px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.testi-track-wrap {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  gap: 12px;
+  padding: 0 22px 32px;
+  scrollbar-width: none;
+  cursor: grab;
+}
+
+.testi-track-wrap::-webkit-scrollbar { display: none; }
+.testi-track-wrap:active { cursor: grabbing; }
+
+.testi-slide {
+  flex-shrink: 0;
+  width: 280px;
+  scroll-snap-align: start;
+  position: relative;
+}
+
+.img-wrap {
+  position: relative;
+  display: block;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #111;
+}
+
+.img-wrap img {
+  width: 100%;
+  display: block;
+  border-radius: 14px;
+}
+
+/* Redaction overlay */
+.redact {
+  position: absolute;
+  background: #111;
+  border-radius: 3px;
+  pointer-events: none;
+}
+
+/* Dots indicator */
+.testi-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 22px 40px;
+}
+
+.testi-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition: background 0.2s, width 0.2s;
+}
+
+.testi-dot.active {
+  background: var(--dim);
+  width: 16px;
+  border-radius: 2px;
+}
+
+/* ====== PRIVACY LIST ====== */
+.privacy-list {
+  margin: 28px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.privacy-item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 16px;
+  color: var(--dim);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.privacy-item:first-child { border-top: 1px solid var(--border); }
+
+.privacy-item::before {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ====== FOOTER ====== */
+footer {
+  padding: 32px 0 56px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+footer p {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 480px) {
+  body { font-size: 16px; }
+  .hero { padding: 56px 0 48px; }
+  .block { padding: 40px 0; }
+  .testi-slide { width: 260px; }
+}
+</style>
+</head>
+<body>
+
+
+<!-- ==================== HERO ==================== -->
+<div class="wrap">
+  <div class="hero">
+    <p class="eyebrow">Método Entrega Total</p>
+
+    <div class="hero-line">Você sente<br><span>quase lá.</span></div>
+    <div class="hero-line">E trava.</div>
+    <div class="hero-line">Sempre.</div>
+
+    <p class="hero-sub">
+      Não é defeito, não é falta de desejo, e não tem nada a ver com o parceiro.
+      É um padrão, e existe uma forma de desfazer isso.
+    </p>
+  </div>
+</div>
+
+
+<!-- ==================== IDENTIFICAÇÃO ==================== -->
+<div class="wrap">
+  <div class="block">
+
+    <p class="p-big">Você nunca falou sobre isso.</p>
+    <p class="p-dim">Com ninguém.</p>
+    <p class="p">
+      Não porque não importa, mas porque como você explica algo que não tem nome?
+    </p>
+    <p class="p">
+      Aquela sensação de que existe algo ali, bloqueado, que a entrega nunca vem completa, que no momento certo, algo te segura.
+    </p>
+    <p class="p">
+      Você já tentou relaxar mais, mudar de ambiente, tentar de outro jeito.
+    </p>
+
+    <div class="highlight">
+      <p class="p-big">E o padrão continua.</p>
+    </div>
+
+    <p class="p">
+      Não é falta de esforço, é que a solução nunca foi por ali.
+    </p>
+
+  </div>
+</div>
+
+
+<!-- ==================== O PROBLEMA REAL ==================== -->
+<div class="wrap">
+  <div class="block">
+
+    <p class="p-big">O problema não está no corpo.</p>
+
+    <p class="p">
+      Está na mente que foi condicionada a controlar, a vigiar, a analisar. E que age sozinha, exatamente na hora que deveria sair do caminho.
+    </p>
+
+    <p class="p">
+      A sensação começa, a mente entra, avalia, tenta acompanhar. E o processo para.
+    </p>
+
+    <div class="highlight">
+      <p class="p-big">"Você não perde no começo, você perde quando começa a dar certo."</p>
+    </div>
+
+    <p class="p-dim">
+      Isso acontece com mais mulheres do que você imagina. Só que ninguém fala.
+    </p>
+
+  </div>
+</div>
+
+
+<!-- ==================== POR QUE NADA FUNCIONOU ==================== -->
+<div class="wrap">
+  <div class="block">
+
+    <p class="p-big">Por que as outras tentativas não funcionaram.</p>
+
+    <p class="p">
+      Dicas de posição, técnicas, listas de estímulos. Tudo isso pressupõe que o problema é externo.
+    </p>
+
+    <p class="p">
+      Mas quando o bloqueio está na mente, mudar o que está fora não altera nada. O cenário muda, o padrão continua.
+    </p>
+
+    <p class="p-dim">
+      Você já sabe disso. Porque já tentou.
+    </p>
+
+  </div>
+</div>
+
+
+<!-- ==================== O MECANISMO ==================== -->
+<div class="wrap">
+  <div class="block">
+
+    <p class="p-big">O que realmente resolve.</p>
+
+    <p class="p">
+      Existe uma abordagem terapêutica, baseada em hipnoterapia, que trabalha direto onde o padrão foi criado.
+    </p>
+
+    <p class="p">
+      Ela conduz a mente para um estado de receptividade profunda, o controle cede, o corpo responde como sempre soube.
+    </p>
+
+    <p class="p">
+      Sem esforço, sem precisar entender como funciona, sem depender de ninguém.
+    </p>
+
+    <div class="highlight">
+      <p class="p-big">"Não é sobre aprender algo novo, é sobre parar de bloquear o que já existe."</p>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ==================== CTA 1 ==================== -->
+<div class="wrap">
+  <div class="inline-cta">
+    <p class="p-dim">Acesse o método completo por R$19,90</p>
+    <a class="btn" href="https://pay.kiwify.com.br/VIT3Paa">Quero acessar agora</a>
+    <p class="cta-note">acesso imediato e discreto</p>
+  </div>
+</div>
+
+
+<!-- ==================== AS 3 ETAPAS ==================== -->
+<div class="wrap">
+  <div class="block">
+
+    <p class="p-dim" style="margin-bottom:28px;">O processo tem três etapas, cada uma prepara a próxima.</p>
+
+    <div class="step">
+      <p class="step-num">Etapa 01</p>
+      <p class="step-title">Rendição</p>
+      <p class="step-desc">A mente precisa parar de resistir antes de qualquer coisa, a condução trabalha direto nesse ponto. O controle começa a ceder de forma natural, sem que você precise forçar nada.</p>
+    </div>
+
+    <div class="step">
+      <p class="step-num">Etapa 02</p>
+      <p class="step-title">Ascensão</p>
+      <p class="step-desc">Com a resistência reduzida, o processo começa a construir de dentro para fora, sem depender de estímulo externo. O corpo começa a responder por conta própria.</p>
+    </div>
+
+    <div class="step">
+      <p class="step-num">Etapa 03</p>
+      <p class="step-title">Entrega</p>
+      <p class="step-desc">O estado de entrega total, o corpo responde sem interferência. Você descobre que não havia nada de errado, só um padrão que precisava ser liberado.</p>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ==================== O PRODUTO ==================== -->
+<div class="wrap">
+  <div class="block">
+
+    <p class="p-big">Como funciona na prática.</p>
+
+    <p class="p">
+      O método é entregue em áudio, você ouve onde quiser, quando quiser, com fone de ouvido.
+    </p>
+
+    <p class="p">
+      Não há imagem, não há rosto, não há exposição.
+    </p>
+
+    <p class="p">
+      É completamente privado, ninguém precisa saber que você usou.
+    </p>
+
+    <p class="p">
+      Casada, solteira, em um relacionamento, isso não altera o processo. Você pode imaginar quem quiser durante a condução, ou não imaginar ninguém. O método não cria vínculo externo, ele remove o que está bloqueando internamente.
+    </p>
+
+    <p class="p-dim" style="margin-top:24px;">
+      Junto ao áudio principal, você recebe um material de preparação que explica como criar o estado mental ideal antes de começar.
+    </p>
+
+  </div>
+</div>
+
+
+<!-- ==================== DEPOIMENTOS ==================== -->
+<div class="testi-section">
+
+  <p class="testi-label">Quem já usou</p>
+  <p class="testi-hint">Deslize para ver os relatos reais</p>
+
+  <div class="testi-track-wrap" id="testiTrack">
+
+    <!-- Slide 1 — IMG_5078 (clean) -->
+    <div class="testi-slide">
+      <div class="img-wrap">
+        <img src="file:///Users/michelmarques/Desktop/depoimentos/IMG_5078.jpg" alt="Depoimento">
+      </div>
+    </div>
+
+    <!-- Slide 2 — IMG_5174 (clean) -->
+    <div class="testi-slide">
+      <div class="img-wrap">
+        <img src="file:///Users/michelmarques/Desktop/depoimentos/IMG_5174.jpg" alt="Depoimento">
+      </div>
+    </div>
+
+    <!-- Slide 3 — IMG_7077 (clean) -->
+    <div class="testi-slide">
+      <div class="img-wrap">
+        <img src="file:///Users/michelmarques/Desktop/depoimentos/IMG_7077.jpg" alt="Depoimento">
+      </div>
+    </div>
+
+    <!-- Slide 4 — IMG_9981 (clean) -->
+    <div class="testi-slide">
+      <div class="img-wrap">
+        <img src="file:///Users/michelmarques/Desktop/depoimentos/IMG_9981.jpg" alt="Depoimento">
+      </div>
+    </div>
+
+    <!-- Slide 5 — IMG_6108 (clean) -->
+    <div class="testi-slide">
+      <div class="img-wrap">
+        <img src="file:///Users/michelmarques/Desktop/depoimentos/IMG_6108.jpg" alt="Depoimento">
+      </div>
+    </div>
+
+    <!-- Slide 6 — IMG_5190 (clean) -->
+    <div class="testi-slide">
+      <div class="img-wrap">
+        <img src="file:///Users/michelmarques/Desktop/depoimentos/IMG_5190.jpg" alt="Depoimento">
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- Dots -->
+  <div class="testi-dots" id="testiDots"></div>
+
+</div>
+
+
+<!-- ==================== PRIVACIDADE ==================== -->
+<div class="wrap">
+  <div class="block">
+
+    <p class="p-big">Ninguém precisa saber.</p>
+
+    <p class="p-dim">Isso é entre você e você.</p>
+
+    <div class="privacy-list">
+      <div class="privacy-item">Nenhum produto físico chegando na sua casa</div>
+      <div class="privacy-item">Nenhum dado sensível exposto</div>
+      <div class="privacy-item">Nenhuma conversa necessária com ninguém</div>
+      <div class="privacy-item">Funciona sozinha, no seu ritmo, no seu tempo</div>
+      <div class="privacy-item">Acesso imediato após a compra</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ==================== FECHAMENTO ==================== -->
+<div class="wrap">
+  <div class="block">
+
+    <p class="p-big">Você não precisa de mais uma tentativa.</p>
+
+    <p class="p">
+      Você precisa de um ponto de entrada diferente.
+    </p>
+
+    <p class="p">
+      Por R$19,90, o método acessa direto onde o bloqueio existe, sem esforço, sem exposição, sem precisar envolver ninguém.
+    </p>
+
+    <div class="highlight">
+      <p class="p-big">"Você não precisa se esforçar pra chegar lá, você precisa parar de impedir."</p>
+    </div>
+
+    <p class="p-dim">
+      Se isso faz sentido pra você, o acesso está abaixo.
+    </p>
+
+  </div>
+</div>
+
+
+<!-- ==================== CTA FINAL ==================== -->
+<div class="wrap" id="comprar">
+  <div class="cta-wrap">
+
+    <p class="cta-label">Método Entrega Total</p>
+
+    <div class="price-display">
+      <sup>R$</sup>19<span style="font-size:0.55em;font-weight:300;color:var(--dim)">,90</span>
+    </div>
+
+    <a class="btn" href="https://pay.kiwify.com.br/VIT3Paa">Quero acessar o Método Entrega Total</a>
+    <p class="cta-note">acesso imediato, privado, uma única vez</p>
+
+  </div>
+</div>
+
+
+<!-- ==================== FOOTER ==================== -->
+<div class="wrap">
+  <footer>
+    <p>Método Entrega Total &nbsp;&middot;&nbsp; Todos os direitos reservados</p>
+  </footer>
+</div>
+
+
+<script>
+// ---- Carousel drag + dots ----
+(function () {
+  const track = document.getElementById('testiTrack');
+  const dotsContainer = document.getElementById('testiDots');
+  const slides = track.querySelectorAll('.testi-slide');
+  const total = slides.length;
+  let dots = [];
+
+  // Build dots
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = 'testi-dot' + (i === 0 ? ' active' : '');
+    dotsContainer.appendChild(d);
+    dots.push(d);
+  }
+
+  // Update dots on scroll
+  track.addEventListener('scroll', function () {
+    const scrollLeft = track.scrollLeft;
+    const slideWidth = slides[0].offsetWidth + 12;
+    const active = Math.round(scrollLeft / slideWidth);
+    dots.forEach(function (d, i) {
+      d.classList.toggle('active', i === active);
+    });
+  }, { passive: true });
+
+  // Mouse drag
+  let isDown = false, startX, scrollStart;
+
+  track.addEventListener('mousedown', function (e) {
+    isDown = true;
+    startX = e.pageX - track.offsetLeft;
+    scrollStart = track.scrollLeft;
+  });
+
+  track.addEventListener('mouseleave', function () { isDown = false; });
+  track.addEventListener('mouseup', function () { isDown = false; });
+
+  track.addEventListener('mousemove', function (e) {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - track.offsetLeft;
+    track.scrollLeft = scrollStart - (x - startX);
+  });
+})();
+</script>
+
+</body>
+</html>
